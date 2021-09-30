@@ -15,4 +15,4 @@ This is a Django project with a dashboard of news scraped using Celery Tasks
 You will need to copy the `.settings.env` file and rename it `.env`. Inside there you can fill in the values of the environment variables, create a database and you're all good to go.
 
 ## Show Celery Task
-- celery -A newsscraper worker -l INFO
+- celery -A newsscraper worker -l INFO`
