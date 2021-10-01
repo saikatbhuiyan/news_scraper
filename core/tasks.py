@@ -1,4 +1,5 @@
-from celery import shared_task, task
+from celery import shared_task
+from newsscraper.celery  import app as celery_app
 
 # allows you to call this function asynchronously
 
@@ -8,7 +9,7 @@ def send_mass_emails(recipient):
     print("Doing it")
 
 
-@task
+@celery_app.task
 def send_scheduled_emails():
     # get all those email addresses
     pass
