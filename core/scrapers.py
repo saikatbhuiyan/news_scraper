@@ -66,6 +66,7 @@
 
 
 import datetime
+from django.utils import timezone
 from dateutil.relativedelta import relativedelta
 
 from selenium import webdriver
@@ -74,7 +75,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-from .models import NewsItem
+from .models import NewsItem, ScrapeRecord
 
 
 def scrape(url):
@@ -100,6 +101,9 @@ def scrape(url):
         browser.quit()
 
     try:
+        record = ScrapeRecord.objects.create(
+            finish_time=timezone.now()
+        )
         # find all the elements with this class -> single-article single-article-small-pic
         article_elements = browser.find_elements_by_xpath(
             "//div[@class='single-article single-article-small-pic']")
@@ -143,7 +147,9 @@ def scrape(url):
                         source='Dev.to',
                         publish_date=new_item_date
                     )
-
-    except:
-        print('Error')
-        # send ourselves email
+        record.finish_time = timezone.now()
+        record.finished = True
+        record.save()
+    except Exception as e:
+        raise e
+        pass
