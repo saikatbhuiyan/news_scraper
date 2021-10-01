@@ -66,9 +66,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_TIMEZONE = 'UTC'
 CELERY_BEAT_SCHEDULE = {
-    "SendScheduledEmails": {
-        'task': 'core.tasks.send_scheduled_emails',
-        'schedule': 5  # crontab(minute="*/30")  # Every 30 mins
+    "SendScheduledScrape": {
+        'task': 'core.tasks.scrape_dev_to',
+        'schedule': 10  # crontab(minute="*/30")  # Every 30 mins
     }
 }
 
